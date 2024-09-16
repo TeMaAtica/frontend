@@ -3,13 +3,13 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBXgBykiefZ5oPv8KsAEbrJrFXJNVzJ9Fo",
-  authDomain: "apptelebot.firebaseapp.com",
-  projectId: "apptelebot",
-  storageBucket: "apptelebot.appspot.com",
-  messagingSenderId: "464223544142",
-  appId: "1:464223544142:web:c3fdb64c21d75439f1f41f"
-
+    apiKey: "AIzaSyBPFOt2Sd-NZjIhJWI0rg4bhhi6uYKNcms",
+    authDomain: "temaatica.firebaseapp.com",
+    projectId: "temaatica",
+    storageBucket: "temaatica.appspot.com",
+    messagingSenderId: "115334934168",
+    appId: "1:115334934168:web:fe76ab7aa718a02ed92aed",
+    measurementId: "G-SKGVFNF0S6",
 };
 
 const app = initializeApp(firebaseConfig);
