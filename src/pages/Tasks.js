@@ -36,7 +36,7 @@ const Tasks = () => {
     
 
     const {id, balance, refBonus, taskCompleted, level, 
-      setTaskCompleted, taskCompleted2, setTaskCompleted2, taskCompleted3, setTaskCompleted3, taskCompleted4, setTaskCompleted4, taskCompleted5, setTaskCompleted5, taskCompleted6, setTaskCompleted6, taskCompleted7, setTaskCompleted7} = useUser();
+      setTaskCompleted, taskCompleted2, setTaskCompleted2, taskCompleted3, setTaskCompleted3, setTaskCompleted4, taskCompleted5, setTaskCompleted5, taskCompleted6, setTaskCompleted6, taskCompleted7, setTaskCompleted7} = useUser();
       // eslint-disable-next-line
     const [loading, setLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
