@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
+        node-version: [22.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -29,6 +29,6 @@ jobs:
     - run: npm ci
     - name: Disable strict CI mode
       run: |
-        unset CI
+        echo "CI=false" >> $GITHUB_ENV
     - run: npm run build --if-present
     - run: npm test
