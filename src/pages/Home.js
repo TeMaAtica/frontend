@@ -2,13 +2,18 @@ import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import "../App.css";
 import "../fire.scss";
+
 import { AnimatePresence } from "framer-motion";
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
-import { UserProvider } from "../context/userContext";
+import {UserProvider, useUser} from "../context/userContext";
+import { db } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 const tele = window.Telegram.WebApp;
 const Home = () => {
+    // const { id, username, referrals, loading } = useUser();
+
     useEffect(() => {
         const handleContextMenu = (event) => event.preventDefault();
         const handleKeyDown = (event) => {

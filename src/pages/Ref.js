@@ -8,7 +8,7 @@ import { useUser } from "../context/userContext";
 
 
 const Ref = () => {
-  const { id, referrals, loading } = useUser();
+  const { id, username, referrals, loading } = useUser();
   // eslint-disable-next-line
   const [claimLevel, setClaimLevel] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -99,7 +99,7 @@ const Ref = () => {
         <p className='w-full text-center'>checking...</p>
       ) : referrals.length === 0 ? (
         <p className='text-center w-full now pt-8 px-5 text-[14px] leading-[24px]'>
-         You don't have referrals😭
+         You don't have referrals, {username}😭
           </p>
       ) : (
         <>
