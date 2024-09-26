@@ -418,7 +418,7 @@ const Plutos = () => {
                                 {formatNumber(balance + refBonus)} <br />
                             </h1>
                         </div>
-                        <div className='flex justify-center items-center space-y-6 fixed bottom-[120px] left-0 right-0 flex-col gap-6 px-4 '>
+                        <div className='flex justify-center items-center space-y-6 fixed bottom-[120px] left-0 right-0 flex-col gap-0 px-4 '>
                             <Chests />
                             <button
                                 className='bg-primary text-white rounded-2xl px-4 py-3 font-Inter text-24 gap-5 font-extrabold w-full flex justify-center items-center max-w-[700px]'
