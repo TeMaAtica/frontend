@@ -27,11 +27,7 @@ const router = createBrowserRouter([
     children:[
       {
         path:"/",
-        element: <Plutos />,
-      },
-      {
-        path:"/ref",
-        element: <Ref />,
+        element: <Connect />,
       },
       {
         path:"/tasks",
@@ -43,7 +39,7 @@ const router = createBrowserRouter([
       },
       {
         path:"/connect",
-        element: <Connect />,
+        element: <Ref />,
       },
     ]
 
