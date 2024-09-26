@@ -1,6 +1,6 @@
 body{
-  background: linear-gradient(to bottom, #191b33, #1b202d);
-  background-color: #332519;
+  /* background: linear-gradient(to bottom, #191b33, #1b202d); */
+  background-color: #000;
   color: #fff;
   height: var(--tg-viewport-stable-height);
   touch-action: none; /* Prevent touch actions */
@@ -13,7 +13,7 @@ body{
 }
 
 .taskhead{
-  background: linear-gradient(to bottom, #191b33, #1b202d);
+  /* background: linear-gradient(to bottom, #191b33, #1b202d); */
 }
 .heading{
   text-align: center;
@@ -242,8 +242,8 @@ body{
 
 
 .taskbg{
-  background: linear-gradient(to bottom, #191b33, #1b202d);
-  background-color: #191b33;
+  /* background: linear-gradient(to bottom, #191b33, #1b202d); */
+  background-color: #000;
   color: #fff;
   height: var(--tg-viewport-stable-height);
   touch-action: none; /* Prevent touch actions */
