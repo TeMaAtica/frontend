@@ -5,6 +5,7 @@ import styled, { keyframes } from "styled-components";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import Animate from "../Components/Animate";
 import Spinner from "../Components/Spinner";
+import Chests from "../Components/Chests";
 import { useUser } from "../context/userContext";
 import Levels from "../Components/Levels";
 import flash from "../images/flash.webp";
@@ -12,6 +13,8 @@ import coinsmall from "../images/coinsmall.webp";
 import useSound from "use-sound";
 import boopSfx from "../get.mp3";
 import burnSfx from "../burn.wav";
+
+import { ReactComponent as GameIcon } from "../images/icons/game.svg";
 
 const slideUp = keyframes`
   0% {
@@ -371,6 +374,8 @@ const Plutos = () => {
             return new Intl.NumberFormat().format(num).replace(/,/g, " ");
             // } else {
             //   return (num / 1000000).toFixed(3).replace(".", ".") + " M";
+        } else if (num > 99999999999) {
+            return (num / 1000000).toFixed(3).replace(".", ".") + " M";
         } else {
             return new Intl.NumberFormat().format(num).replace(/,/g, " ");
         }
@@ -388,7 +393,7 @@ const Plutos = () => {
                 <Spinner />
             ) : (
                 <Animate>
-                    <div className='w-full flex justify-center flex-col overflow-hidden'>
+                    <div className='w-full flex justify-between flex-col overflow-hidden gap-[200px] px-5'>
                         {/* <div className='flex flex-row justify-center items-center mb-2'>
                             <div className='bg-[#6b0003] text-[#fff] text-[12px] font-extrabold text-center p-2 mr-2 rounded-[10px] shadow-lg shadow-white/50'>
                                 Welcome
@@ -405,17 +410,23 @@ const Plutos = () => {
                             </div>
                         </div> */}
 
-                        <div className='flex space-x-[2px] justify-center items-center'>
-                            <div className='w-[50px] h-[50px]'>
-                                <img
-                                    src={coinsmall}
-                                    className='w-full'
-                                    alt='coin'
-                                />
-                            </div>
-                            <h1 className='text-[#fff] text-[42px] font-extrabold'>
+                        <div className='flex justify-center items-center '>
+                            <h1 className='text-primary font-Inter text-46 font-extrabold '>
+                                $
+                            </h1>
+                            <h1 className='text-white font-Inter text-46 font-extrabold font-outline-2'>
                                 {formatNumber(balance + refBonus)} <br />
                             </h1>
+                        </div>
+                        <div className='flex justify-center items-center space-y-6 fixed bottom-[120px] left-0 right-0 flex-col gap-6 px-4 '>
+                            <Chests />
+                            <button
+                                className='bg-primary text-white rounded-2xl px-4 py-3 font-Inter text-24 gap-5 font-extrabold w-full flex justify-center items-center max-w-[700px]'
+                                ref={imageRef}
+                                onPointerDown={handleClick}
+                            >
+                                Play game <GameIcon />
+                            </button>
                         </div>
                         {/* <div className='w-full ml-[6px] flex space-x-1 items-center justify-center'>
                             <img
@@ -430,7 +441,7 @@ const Plutos = () => {
                                 {level.name}
                             </h2>
                             <MdOutlineKeyboardArrowRight className='w-[20px] h-[20px] text-[#9d99a9] mt-[2px]' />
-                        </div> 
+                        </div>
                         <div className='w-full flex justify-center items-center relative'>
                             <div className='bg-[#cc0000] blur-[50px] absolute w-[200px] h-[220px] rounded-full mb-[70px]'></div>
                             <div
@@ -494,9 +505,11 @@ const Plutos = () => {
                                     )}
                                 </div>
                             </div>
-                        </div> 
+                        </div>
+                        */}
+                        {/*
                         <div className='flex flex-col space-y-6 fixed bottom-[120px] left-0 right-0 justify-center items-center px-5'>
-                            <div className='flex flex-col w-full items-center justify-center'>
+                             <div className='flex flex-col w-full items-center justify-center'>
                                 <div className='flex pb-[6px] space-x-1 items-center justify-center text-[#fff]'>
                                     <img
                                         alt='flash'
@@ -521,12 +534,12 @@ const Plutos = () => {
                                     ></div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                         <Levels
                             showLevels={showLevels}
                             setShowLevels={setShowLevels}
                         />
-                        */}
+                             */}
                     </div>
                 </Animate>
             )}
