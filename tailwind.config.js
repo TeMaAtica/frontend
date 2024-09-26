@@ -29,6 +29,22 @@ module.exports = {
                 24: ["24px", "28px"],
                 46: ["46px", "52px"],
             },
+            keyframes: {
+                wiggle: {
+                    "0%, 100%": { transform: "scale(1)" },
+                    "10%": { transform: "scale(0.9)" },
+                    "66%": { transform: "scale(1.1)" },
+                },
+                fadeUp: {
+                    "0%": { opacity: 0.2, transform: "translateY(100px)" },
+                    "70%": { opacity: 1, transform: "translateY(70px)" },
+                    "100%": { opacity: 0, transform: "translateY(0)" },
+                },
+            },
+            animation: {
+                wiggle: "wiggle 200ms ease-in-out",
+                fadeUp: "fadeUp 1100ms ease-in-out",
+            },
         },
         screens: {
             xs: "480px",
