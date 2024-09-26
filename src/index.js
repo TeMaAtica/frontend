@@ -9,9 +9,9 @@ import Tasks from "./pages/Tasks";
 import Boost from "./pages/Boost";
 import Stats from "./pages/Stats";
 import Connect from "./pages/ConnectWallet";
-// import DeviceCheck from "./Components/DeviceCheck";
 import Plutos from "./pages/Plutos";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
+import { UserProvider } from './context/userContext';
 
 const manifestUrl =
     "https://raw.githubusercontent.com/vshaltd/kdf/main/public/tonconnect-manifest.json";
@@ -50,9 +50,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     // <DeviceCheck>
     <TonConnectUIProvider manifestUrl={manifestUrl}>
-        <React.StrictMode>
-            <RouterProvider router={router} />
-        </React.StrictMode>
+        <UserProvider>
+            <React.StrictMode>
+                <RouterProvider router={router} />
+            </React.StrictMode>
+        </UserProvider>
     </TonConnectUIProvider>
     // </DeviceCheck>
 );
