@@ -1,10 +1,9 @@
 {
   "files": {
-    "main.css": "/frontend/static/css/main.482038d0.css",
-    "main.js": "/frontend/static/js/main.637d4d78.js",
+    "main.css": "/frontend/static/css/main.0d641a90.css",
+    "main.js": "/frontend/static/js/main.ef5920fc.js",
     "static/js/718.372da8bb.chunk.js": "/frontend/static/js/718.372da8bb.chunk.js",
     "static/media/preloader.png": "/frontend/static/media/preloader.5d1d3c351216a0c36fa3.png",
-    "static/media/coins-6.webp": "/frontend/static/media/coins-6.f5c899d1f5f46f6c2302.webp",
     "static/media/instagram.gif": "/frontend/static/media/instagram.5f480eb82f365c0b860c.gif",
     "static/media/facebook.gif": "/frontend/static/media/facebook.c20293ec0831a4dd19db.gif",
     "static/media/celebrate.gif": "/frontend/static/media/celebrate.3ccc38bde591937274c5.gif",
@@ -17,24 +16,25 @@
     "static/media/get.mp3": "/frontend/static/media/get.486b5cd588f69502c4d3.mp3",
     "static/media/ref1.png": "/frontend/static/media/ref1.79cc0bfc08a742f860f8.png",
     "static/media/bott.webp": "/frontend/static/media/bott.eeb807d378241e3441dc.webp",
-    "static/media/ref4.webp": "/frontend/static/media/ref4.c288e6fd6de2d53ac726.webp",
-    "static/media/wallet2.webp": "/frontend/static/media/wallet2.c596a0416f65540ec35e.webp",
     "static/media/tonwallet.webp": "/frontend/static/media/tonwallet.f20433b40d42dc872419.webp",
-    "static/media/tasks2.webp": "/frontend/static/media/tasks2.c646513690769c23660f.webp",
     "static/media/booster2.webp": "/frontend/static/media/booster2.6799a6bc5b91d29b068a.webp",
     "static/media/flash1.webp": "/frontend/static/media/flash1.730fe949183a4ef04cc6.webp",
     "static/media/multitap1.webp": "/frontend/static/media/multitap1.64faed3915127424266a.webp",
+    "static/media/frens.svg": "/frontend/static/media/frens.f2602cb847337d4bc8a81b1c41cdbd66.svg",
     "static/media/baterai1.webp": "/frontend/static/media/baterai1.4d05749088eac2f363bd.webp",
     "static/media/energylimit.webp": "/frontend/static/media/energylimit.4d0cf840655d6152f84a.webp",
+    "static/media/shop.svg": "/frontend/static/media/shop.c708efce22585434eed908c73c5b555b.svg",
     "static/media/flash.webp": "/frontend/static/media/flash.54c1a1d469cb7599925a.webp",
     "static/media/claim.webp": "/frontend/static/media/claim.10c81562bf3aabb74a1a.webp",
     "static/media/taskbook.webp": "/frontend/static/media/taskbook.2d19d41c849b4bc90c20.webp",
     "index.html": "/frontend/index.html",
     "static/media/coinsmall.webp": "/frontend/static/media/coinsmall.f6f06ff640e5df45b650.webp",
-    "static/media/stats.webp": "/frontend/static/media/stats.cc5afcdbbfb61b657a4e.webp"
+    "static/media/home.svg": "/frontend/static/media/home.79f02541d700fc82b31eb46166268f11.svg",
+    "static/media/user.svg": "/frontend/static/media/user.7c19f50de0c4db70d03623ea0f96cd6a.svg",
+    "static/media/tasks.svg": "/frontend/static/media/tasks.607a4dd38776d3b987ca243f58221f63.svg"
   },
   "entrypoints": [
-    "static/css/main.482038d0.css",
-    "static/js/main.637d4d78.js"
+    "static/css/main.0d641a90.css",
+    "static/js/main.ef5920fc.js"
   ]
 }
