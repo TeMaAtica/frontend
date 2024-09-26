@@ -24,10 +24,8 @@ module.exports = {
                 Cerebri: ["'Cerebri Sans', sans-serif"],
             },
             fontSize: {
-                13.5: ["13.5px", "16.34px"], // Custom font size with line height
-            },
-            fontWeight: {
-                600: "600", // Already built-in, but for clarity
+                13.5: ["13.5px", "16.34px"],
+                18.5: ["18.5px", "22.34px"],
             },
         },
         screens: {

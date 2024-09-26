@@ -1,10 +1,4 @@
 import React from "react";
-import ref from "../images/ref4.webp";
-import boost from "../images/booster2.webp";
-import tasks from "../images/tasks2.webp";
-import stats from "../images/stats.webp";
-import tonwallet from "../images/wallet2.webp";
-import coinsmall from "../images/coins-6.webp";
 import { NavLink } from "react-router-dom";
 
 import { ReactComponent as HomeIcon } from "../images/icons/home.svg";
@@ -49,7 +43,7 @@ const Footer = () => {
             {/*  */}
 
             <NavLink
-                to='/connect'
+                to='/ref'
                 className={({ isActive }) => {
                     return `
                     w-[25%] h-[50px]  flex flex-col  items-center justify-between ${
