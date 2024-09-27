@@ -25,20 +25,20 @@ const Footer = () => {
             </NavLink>
             {/*  */}
 
-            <NavLink
-                to='/boost'
-                className={({ isActive }) => {
-                    return `
-                    w-[25%] h-[50px]  flex flex-col  items-center justify-between ${
-                        isActive ? "text-white" : "text-dimWhite"
-                    }`;
-                }}
-            >
-                <ShopIcon />
-                <span className='font-Inter text-13.5 font-semibold text-left'>
-                    Shop
-                </span>
-            </NavLink>
+            {/*<NavLink*/}
+            {/*    to='/boost'*/}
+            {/*    className={({ isActive }) => {*/}
+            {/*        return `*/}
+            {/*        w-[25%] h-[50px]  flex flex-col  items-center justify-between ${*/}
+            {/*            isActive ? "text-white" : "text-dimWhite"*/}
+            {/*        }`;*/}
+            {/*    }}*/}
+            {/*>*/}
+            {/*    <ShopIcon />*/}
+            {/*    <span className='font-Inter text-13.5 font-semibold text-left'>*/}
+            {/*        Shop*/}
+            {/*    </span>*/}
+            {/*</NavLink>*/}
 
             {/*  */}
 
