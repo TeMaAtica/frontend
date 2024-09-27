@@ -2,18 +2,40 @@ import React, { useState } from "react";
 import { ReactComponent as ChestIcon } from "../images/icons/chest.svg";
 import { useUser } from "../context/userContext";
 import AnimatedText from "./AnimatedText";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 const Chests = ({ rewards = [3, 30, 90] }) => {
     const [effect, setEffect] = useState(Array(rewards.length).fill(false));
     const [animations, setAnimations] = useState([]);
-    const { setBalance } = useUser();
+    const { setBalance, balance } = useUser();
 
-    const handleClick = (id, e) => {
+    const updateFirestore = async (newBalance) => {
+        const telegramUser = window.Telegram.WebApp.initDataUnsafe?.user;
+        if (telegramUser) {
+            const { id: userId } = telegramUser;
+            const userRef = doc(db, "telegramUsers", userId.toString());
+
+            try {
+                await updateDoc(userRef, {
+                    balance: newBalance,
+                });
+            } catch (error) {
+                console.error("Error updating balance:", error);
+            }
+        }
+    };
+
+    const handleClick = async (id, e) => {
         const newEffect = [...effect];
         newEffect[id] = true;
         setEffect(newEffect);
 
-        setBalance((prevBalance) => prevBalance + rewards[id]);
+        const newBalance = balance + rewards[id];
+        setBalance(newBalance);
+
+        // Обновляем Firestore
+        await updateFirestore(newBalance);
 
         const cursorPosition = {
             x: e.clientX,
@@ -22,7 +44,7 @@ const Chests = ({ rewards = [3, 30, 90] }) => {
 
         setAnimations((prevAnimations) => [
             ...prevAnimations,
-            { amount: rewards[id], position: cursorPosition },
+            {amount: rewards[id], position: cursorPosition},
         ]);
     };
 

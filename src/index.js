@@ -7,6 +7,8 @@ import Home from "./pages/Home";
 import ErrorCom from "./Components/ErrorCom";
 import Tasks from "./pages/Tasks";
 import Boost from "./pages/Boost";
+import EmptyPage from "./pages/EmptyPage";
+
 import Stats from "./pages/Stats";
 import Connect from "./pages/ConnectWallet";
 import Plutos from "./pages/Plutos";
@@ -32,7 +34,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/boost",
-                element: <Boost />,
+                element: <EmptyPage />,
             },
             {
                 path: "/connect",
