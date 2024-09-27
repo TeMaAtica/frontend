@@ -233,9 +233,14 @@ export const UserProvider = ({ children }) => {
       const referralDoc = await getDoc(referralRef);
       if (referralDoc.exists()) {
         const referralData = referralDoc.data();
+        const oldBalance = referral.balance || 0; // Старый баланс реферала
+        const newBalance = referralData.balance;
+        const balanceDifference = newBalance - oldBalance;
+
         return {
           ...referral,
           balance: referralData.balance,
+          balanceDifference: balanceDifference,
           level: referralData.level,
         };
       }

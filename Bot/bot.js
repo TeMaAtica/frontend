@@ -4,8 +4,8 @@ const bot = new Telegraf(TOKEN);
 const express = require("express");
 const app = express()
 app.use(express.json())
-const web_link = "https://96f2-57-129-28-74.ngrok-free.app";
-const community_link = "https://github.com/TeMaAtica/frontend"; 
+const web_link = "https://96f2-57-129-28-74.ngrok-free.app/";
+const community_link = "https://github.com/TeMaAtica/frontend";
 
 
 bot.start((ctx) => {
@@ -21,17 +21,17 @@ More buddies, more coins.`, {
             inline_keyboard: [
               [{ text: "👋 TEMATIKA !", web_app: { url: urlSent } }],
               [{ text: "Join our Community", url: community_link }]
-            
+
             ],
             in: true
         },
     });
   });
-  
-  
-  
+
+
+
   bot.launch();
-  
+
 app.listen(3005, () => {
     console.log("server is me and now running")
 })

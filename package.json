@@ -73,7 +73,7 @@
         "workbox-webpack-plugin": "^6.4.1"
     },
     "scripts": {
-        "start": "BROWSER=none node scripts/start.js",
+        "start": "node scripts/start.js",
         "build": "cross-env GENERATE_SOURCEMAP=false node scripts/build.js",
         "test": "node scripts/test.js",
         "predeploy": "npm run build",

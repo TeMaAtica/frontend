@@ -5,6 +5,8 @@ import ClaimLeveler from "../Components/ClaimLeveler";
 import Spinner from "../Components/Spinner";
 import coinsmall from "../images/coinsmall.webp";
 import { useUser } from "../context/userContext";
+import levels from "../Components/Levels";
+import botImage from '../images/bot.webp';
 
 
 const Ref = () => {
@@ -54,11 +56,18 @@ const Ref = () => {
     }
   };
 
+  const inviteToTelegram = () => {
+    const reflink = `https://t.me/testapp_0123y79234_bot?start=r${id}`;
+      const shareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(reflink)}&text=Join Us!`;
+
+    window.open(shareUrl);
+  };
+
 
   return (
         <>
            
-        {loading ? ( // Display loading indicator if data is fetching
+        {loading ? (
         <Spinner/>
       ) : (
     <>
@@ -78,14 +87,13 @@ const Ref = () => {
             <span className="w-full flex justify-between items-center pb-2">
               <h2 className="text-[18px] font-semibold">My invite link:</h2>
               <span
-                onClick={copyToClipboard}
-                className="bg-gradient-to-b from-[#094e9d] to-[#0b62c4] font-medium py-[6px] px-4 rounded-[12px] flex items-center justify-center text-[16px]"
-              >
-              {copied ? <span>Copied!</span> : <span>Copy</span>}
+                  onClick={inviteToTelegram}
+                  className="bg-gradient-to-b from-[#094e9d] to-[#0b62c4] font-medium py-[6px] px-4 rounded-[12px] flex items-center justify-center text-[16px]">
+              Invite
               </span>
             </span>
             <div className="text-[#9a96a6] text-[13px]">
-            https://t.me/geto_spirit_bot?start=r{id}
+              https://t.me/testapp_0123y79234_bot?start=r{id}
             </div>
           </div>
           <div className="bg-borders w-full px-5 h-[1px] !mt-6"></div>
@@ -94,7 +102,6 @@ const Ref = () => {
             <h3 className="text-[22px] font-semibold pb-[16px]">My Referrals:</h3>
 
             <div className="w-full flex flex-col space-y-3">
-
             {loading ? (
         <p className='w-full text-center'>checking...</p>
       ) : referrals.length === 0 ? (
@@ -113,21 +120,22 @@ const Ref = () => {
 <div
                       key={index}
                       className="bg-cards rounded-[10px] p-[14px] flex flex-wrap justify-between items-center"
-                    >
+>
                       <div className="flex flex-1 flex-col space-y-1">
                         <div className="text-[#fff] pl-1 text-[16px] font-semibold">
-                        {user.username}
+                          {user.username.split('_')[0]}
                         </div>
 
                         <div className="flex items-center space-x-1 text-[14px] text-[#e5e5e5]">
-                          <div className="">
-                            <img src={user.level.imgUrl} alt="bronze" className="w-[18px]" />
+                        <div className="">
+                            <img src={botImage} alt="bronze" className="w-[20px]" />
                           </div>
                           <span className="font-medium text-[#9a96a6]">
-                          {user.level.name}
+                              {user.level.name}
                           </span>
+                           
                           <span className="bg-[#bdbdbd] w-[1px] h-[13px] mx-2"></span>
-
+                           
                           <span className="w-[20px]">
                             <img
                               src={coinsmall}
@@ -141,11 +149,11 @@ const Ref = () => {
                         </div>
                       </div>
 
-                      <div className="text-[#ffce68] font-semibold text-[14px]">
-                      +{formatNumber(user.balance / 100 * 10)}
-                      </div>
-                      <div className="flex w-full mt-2 p-[4px] items-center bg-energybar rounded-[10px] border-[1px] border-borders">
-                        <div className="h-[10px] rounded-[8px] bg-btn w-[.5%]"></div>
+                       <div className="text-[#ffce68] font-semibold text-[14px]">
+                         +{user.balanceDifference > 0 ? formatNumber(user.balanceDifference) : 0}
+                       </div>
+  <div className="flex w-full mt-2 p-[4px] items-center bg-energybar rounded-[10px] border-[1px] border-borders">
+  <div className="h-[10px] rounded-[8px] bg-btn w-[.5%]"></div>
                       </div>
                     </div>
 
