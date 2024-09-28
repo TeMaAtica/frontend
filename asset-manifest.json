@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/frontend/static/css/main.e93f67b8.css",
+    "main.css": "/frontend/static/css/main.5703edff.css",
     "main.js": "/frontend/static/js/main.ecb2590b.js",
     "static/js/718.372da8bb.chunk.js": "/frontend/static/js/718.372da8bb.chunk.js",
     "static/media/instagram.gif": "/frontend/static/media/instagram.5f480eb82f365c0b860c.gif",
@@ -28,8 +28,8 @@
     "static/media/bot.webp": "/frontend/static/media/bot.dbe4254511213270106e.webp",
     "static/media/flash.webp": "/frontend/static/media/flash.54c1a1d469cb7599925a.webp",
     "static/media/claim.webp": "/frontend/static/media/claim.10c81562bf3aabb74a1a.webp",
-    "static/media/taskbook.webp": "/frontend/static/media/taskbook.2d19d41c849b4bc90c20.webp",
     "index.html": "/frontend/index.html",
+    "static/media/taskbook.webp": "/frontend/static/media/taskbook.2d19d41c849b4bc90c20.webp",
     "static/media/coinsmall.webp": "/frontend/static/media/coinsmall.f6f06ff640e5df45b650.webp",
     "static/media/home.svg": "/frontend/static/media/home.79f02541d700fc82b31eb46166268f11.svg",
     "static/media/chest.svg": "/frontend/static/media/chest.c3348a1b74fd0c1c00442d18b0221200.svg",
@@ -37,7 +37,7 @@
     "static/media/tasks.svg": "/frontend/static/media/tasks.607a4dd38776d3b987ca243f58221f63.svg"
   },
   "entrypoints": [
-    "static/css/main.e93f67b8.css",
+    "static/css/main.5703edff.css",
     "static/js/main.ecb2590b.js"
   ]
 }
