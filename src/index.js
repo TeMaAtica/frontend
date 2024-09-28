@@ -18,35 +18,38 @@ import { UserProvider } from './context/userContext';
 const manifestUrl =
     "https://raw.githubusercontent.com/vshaltd/kdf/main/public/tonconnect-manifest.json";
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
     {
-        path: "/",
-        element: <Home />,
-        errorElement: <ErrorCom />,
-        children: [
-            {
-                path: "/",
-                element: <Plutos />,
-            },
-            {
-                path: "/tasks",
-                element: <Tasks />,
-            },
-            {
-                path: "/boost",
-                element: <EmptyPage />,
-            },
-            {
-                path: "/connect",
-                element: <Connect />,
-            },
-            {
-                path: "/ref",
-                element: <Ref />,
-            },
-        ],
+      path: "/",
+      element: <Home />,
+      errorElement: <ErrorCom />,
+      children: [
+        {
+          path: "/",
+          element: <Plutos />,
+        },
+        {
+          path: "/tasks",
+          element: <Tasks />,
+        },
+        {
+          path: "/boost",
+          element: <EmptyPage />,
+        },
+        {
+          path: "/connect",
+          element: <Connect />,
+        },
+        {
+          path: "/ref",
+          element: <Ref />,
+        },
+      ],
     },
-]);
+  ],
+  { basename: "/frontend" }
+);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
