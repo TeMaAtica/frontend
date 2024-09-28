@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/frontend/static/css/main.0d641a90.css",
-    "main.js": "/frontend/static/js/main.ef5920fc.js",
+    "main.css": "/frontend/static/css/main.9ba97d7b.css",
+    "main.js": "/frontend/static/js/main.3bab962d.js",
     "static/js/718.372da8bb.chunk.js": "/frontend/static/js/718.372da8bb.chunk.js",
-    "static/media/preloader.png": "/frontend/static/media/preloader.5d1d3c351216a0c36fa3.png",
     "static/media/instagram.gif": "/frontend/static/media/instagram.5f480eb82f365c0b860c.gif",
+    "static/media/empty.png": "/frontend/static/media/empty.67d6c9458ee7fc3f3c24.png",
     "static/media/facebook.gif": "/frontend/static/media/facebook.c20293ec0831a4dd19db.gif",
     "static/media/celebrate.gif": "/frontend/static/media/celebrate.3ccc38bde591937274c5.gif",
     "static/media/telegram.gif": "/frontend/static/media/telegram.0a09216328c6028ac8af.gif",
@@ -22,19 +22,22 @@
     "static/media/multitap1.webp": "/frontend/static/media/multitap1.64faed3915127424266a.webp",
     "static/media/frens.svg": "/frontend/static/media/frens.f2602cb847337d4bc8a81b1c41cdbd66.svg",
     "static/media/baterai1.webp": "/frontend/static/media/baterai1.4d05749088eac2f363bd.webp",
+    "static/media/game.svg": "/frontend/static/media/game.1111cbbdc6b169c67f190beaa31e352f.svg",
     "static/media/energylimit.webp": "/frontend/static/media/energylimit.4d0cf840655d6152f84a.webp",
     "static/media/shop.svg": "/frontend/static/media/shop.c708efce22585434eed908c73c5b555b.svg",
+    "static/media/bot.webp": "/frontend/static/media/bot.dbe4254511213270106e.webp",
     "static/media/flash.webp": "/frontend/static/media/flash.54c1a1d469cb7599925a.webp",
     "static/media/claim.webp": "/frontend/static/media/claim.10c81562bf3aabb74a1a.webp",
     "static/media/taskbook.webp": "/frontend/static/media/taskbook.2d19d41c849b4bc90c20.webp",
     "index.html": "/frontend/index.html",
     "static/media/coinsmall.webp": "/frontend/static/media/coinsmall.f6f06ff640e5df45b650.webp",
     "static/media/home.svg": "/frontend/static/media/home.79f02541d700fc82b31eb46166268f11.svg",
+    "static/media/chest.svg": "/frontend/static/media/chest.c3348a1b74fd0c1c00442d18b0221200.svg",
     "static/media/user.svg": "/frontend/static/media/user.7c19f50de0c4db70d03623ea0f96cd6a.svg",
     "static/media/tasks.svg": "/frontend/static/media/tasks.607a4dd38776d3b987ca243f58221f63.svg"
   },
   "entrypoints": [
-    "static/css/main.0d641a90.css",
-    "static/js/main.ef5920fc.js"
+    "static/css/main.9ba97d7b.css",
+    "static/js/main.3bab962d.js"
   ]
 }
