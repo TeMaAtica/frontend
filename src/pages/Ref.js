@@ -106,7 +106,7 @@ const Ref = () => {
         <p className='w-full text-center'>checking...</p>
       ) : referrals.length === 0 ? (
         <p className='text-center w-full now pt-8 px-5 text-[14px] leading-[24px]'>
-         You don't have referrals, {username}😭
+         You don't have referrals, {username}😭 
           </p>
       ) : (
         <>
