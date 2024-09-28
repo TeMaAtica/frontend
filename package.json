@@ -81,6 +81,9 @@
         "bot": "node Bot/bot.js"
     },
     "eslintConfig": {
+        "rules": {
+      "no-unused-vars": "warn"
+    }
         "extends": [
             "react-app",
             "react-app/jest"
