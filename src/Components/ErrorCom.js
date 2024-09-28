@@ -49,7 +49,7 @@ Go back
 
 </p>
 <p className="text-[18px] text-justsify">
-Looks Like Something went wrong, This Telegram App is still under Development, Kindly Click On Go back </p>
+Looks Like Something went wrong, This Telegram App is still under Development, Kindly Click On Go back... </p>
 
 
 </div>
