@@ -301,7 +301,7 @@ function App() {
           </div>
           <div className="w-full flex justify-center items-center pt-14 pb-36">
             <div className="w-[265px] h-[265px] relative">
-              <div className="bg-[#efc26999] blur-[50px] absolute rotate-[35deg] w-[400px] h-[160px] -left-40 rounded-full"></div>
+              <div className="bg-background blur-[50px] absolute rotate-[35deg] w-[400px] h-[160px] -left-40 rounded-full"></div>
               <div className="image-container">
                 <Container>
                   <img

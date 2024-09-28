@@ -68,7 +68,7 @@ const TaskSeven = ({ showModal, setShowModal }) => {
 
 
   const handleTaskLinkClick = () => {
-    window.open("https://www.facebook.com/profile.php?id=61562777822910");
+    window.open("https://www.facebook.com/profile.php?id=11111111111111");
 
     setTimeout(() => {
       setShowTaskButton(false);

@@ -61,10 +61,10 @@ export const UserProvider = ({ children }) => {
   const refillSteps = timeRefill.step; // Number of increments
   const incrementValue = refiller / refillSteps; // Amount to increment each step
   const defaultEnergy = refiller; // Default energy value
-  
+
   const refillEnergy = () => {
     if (isRefilling) return;
-  
+
     setIsRefilling(true);
     refillIntervalRef.current = setInterval(() => {
       setEnergy((prevEnergy) => {
@@ -80,12 +80,12 @@ export const UserProvider = ({ children }) => {
           localStorage.setItem('lastRefillTime', Date.now()); // Save the current time
           console.log('Energy saved to local storage:', newEnergy); // Log the energy value saved to local storage
         }
-  
+
         return newEnergy;
       });
     }, refillDuration / refillSteps); // Increase energy at each step
   };
-  
+
   useEffect(() => {
     if (energy < refiller && !isRefilling) {
       refillEnergy();
@@ -93,16 +93,12 @@ export const UserProvider = ({ children }) => {
     }
       // eslint-disable-next-line
   }, [energy, isRefilling]);
-  
+
   useEffect(() => {
     return () => {
       clearInterval(refillIntervalRef.current);
     };
   }, []);
-  
-
-  
-  
 
 
   useEffect(() => {
@@ -215,7 +211,7 @@ export const UserProvider = ({ children }) => {
             console.log('Referrer updated in Firestore');
           }
         }
-        
+
         setInitialized(true);
         setLoading(false);
         fetchData(userId.toString()); // Fetch data for the new user
@@ -237,9 +233,14 @@ export const UserProvider = ({ children }) => {
       const referralDoc = await getDoc(referralRef);
       if (referralDoc.exists()) {
         const referralData = referralDoc.data();
+        const oldBalance = referral.balance || 0; // Старый баланс реферала
+        const newBalance = referralData.balance;
+        const balanceDifference = newBalance - oldBalance;
+
         return {
           ...referral,
           balance: referralData.balance,
+          balanceDifference: balanceDifference,
           level: referralData.level,
         };
       }
@@ -331,7 +332,7 @@ export const UserProvider = ({ children }) => {
     } else if (newTapBalance >= 10000000000) {
       newLevel = { id: 11, name: "Burning5", imgUrl: "/burning.webp", imgTap: "/coin-6.webp", imgBoost: "/coins-6.webp" };
     }
-    
+
 
     if (newLevel.id !== level.id) {
       setLevel(newLevel);
@@ -340,7 +341,7 @@ export const UserProvider = ({ children }) => {
       console.log(`User level updated to ${newLevel.name}`);
     }
   };
-  
+
 
 
 
@@ -354,21 +355,21 @@ export const UserProvider = ({ children }) => {
     if (id) {
       const storedEnergy = localStorage.getItem('energy');
       const lastRefillTime = localStorage.getItem('lastRefillTime');
-    
+
       if (storedEnergy && lastRefillTime) {
         const energyValue = Number(storedEnergy);
         const lastTime = Number(lastRefillTime);
-    
+
         if (!isNaN(energyValue) && energyValue >= 0 && !isNaN(lastTime) && lastTime > 0) {
           const elapsedTime = Date.now() - lastTime;
           const elapsedSteps = Math.floor(elapsedTime / (refillDuration / refillSteps));
           const restoredEnergy = Math.min(energyValue + elapsedSteps * incrementValue, refiller);
-    
+
           if (!isNaN(restoredEnergy) && restoredEnergy >= 0) {
             setEnergy(restoredEnergy);
             localStorage.setItem('energy', restoredEnergy); // Update the stored energy
             localStorage.setItem('lastRefillTime', Date.now()); // Update the last refill time
-    
+
             if (restoredEnergy < refiller) {
               setIsRefilling(false);
               refillEnergy();
@@ -394,7 +395,7 @@ export const UserProvider = ({ children }) => {
         localStorage.setItem('energy', defaultEnergy);
         localStorage.setItem('lastRefillTime', Date.now());
       }
-  
+
       fetchData(id);
       console.log('MY REFIILER IS:', refiller)
     }
@@ -404,7 +405,7 @@ export const UserProvider = ({ children }) => {
   const checkAndUpdateFreeGuru = async () => {
     const userRef = doc(db, 'telegramUsers', id.toString());
     const userDoc = await getDoc(userRef);
-  
+
     if (userDoc.exists()) {
       const userData = userDoc.data();
       const lastDate = userData.timeSta.toDate(); // Convert Firestore timestamp to JS Date
@@ -415,7 +416,7 @@ export const UserProvider = ({ children }) => {
       // console.log('timesta is:', lastDate)
       // console.log('current time is:', currentDate)
       // console.log('time difference is:', timeDifference)
-  
+
       if (formattedDates !== formattedCurrentDates && userData.freeGuru <= 0) {
         await updateDoc(userRef, {
           freeGuru: 3,
@@ -430,7 +431,7 @@ export const UserProvider = ({ children }) => {
   const checkAndUpdateFullTank = async () => {
     const userRef = doc(db, 'telegramUsers', id.toString());
     const userDoc = await getDoc(userRef);
-  
+
     if (userDoc.exists()) {
       const userData = userDoc.data();
       const lastDateTank = userData.timeStaTank.toDate(); // Convert Firestore timestamp to JS Date
@@ -444,7 +445,7 @@ export const UserProvider = ({ children }) => {
       console.log('current time is:', currentDate)
       console.log('formatted current time is:', formattedCurrentDate)
       // console.log('time difference is:', timeDifference)
-  
+
       if (formattedDate !== formattedCurrentDate && userData.fullTank <= 0) {
         await updateDoc(userRef, {
           fullTank: 3,
@@ -551,7 +552,7 @@ export const UserProvider = ({ children }) => {
     return count / 4;
   };
 
-  
+
   // Call this function when appropriate, such as on component mount or before handleClick
   useEffect(() => {
     if (id) {
@@ -567,7 +568,7 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     if (id) {
       updateUserLevel(id, tapBalance);
-    
+
     }
       // eslint-disable-next-line
   }, [tapBalance, id]);
