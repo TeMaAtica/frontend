@@ -9,8 +9,8 @@ import ref from "../images/ref1.png";
 import coinsmall from "../images/coinsmall.webp";
 
 const friendsRewards = [
-  { title: 'Invite 3 friends', referralsRequired: 2, bonusAward: 50000, imgRef: '/ref1.webp' },
-  { title: 'Invite 5 friends', referralsRequired: 5, bonusAward: 150000, imgRef: '/ref2.webp' },
+  { title: 'Invite 3 friends', referralsRequired: 1, bonusAward: 50000, imgRef: '/ref1.webp' },
+  { title: 'Invite 5 friends', referralsRequired: 2, bonusAward: 150000, imgRef: '/ref2.webp' },
   { title: 'Invite 10 friends', referralsRequired: 10, bonusAward: 250000, imgRef: '/ref3.webp' },
 ];
 
