@@ -19,16 +19,4 @@ const db = getFirestore(app);
 console.log("Firebase initialized:", app);
 console.log("Firestore initialized:", db);
 
-// async function getDataFromCollection(collectionName) {
-//     try {
-//         const querySnapshot = await getDocs(collection(db, collectionName));
-//         querySnapshot.forEach((doc) => {
-//             console.info(`${doc.id} => `, doc.data());
-//         });
-//     } catch (error) {
-//         console.error("Error fetching data: ", error);
-//     }
-// }
-// getDataFromCollection("oil");
-
 export { db };

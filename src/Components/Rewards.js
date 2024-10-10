@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { updateDoc, doc } from 'firebase/firestore';
-import { db } from '../firebase';
+import axios from 'axios';
 import { useUser } from '../context/userContext';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import congratspic from "../images/celebrate.gif";
@@ -9,8 +8,8 @@ import ref from "../images/ref1.png";
 import coinsmall from "../images/coinsmall.webp";
 
 const friendsRewards = [
-  { title: 'Invite 3 friends', referralsRequired: 2, bonusAward: 50000, imgRef: '/ref1.webp' },
-  { title: 'Invite 5 friends', referralsRequired: 5, bonusAward: 150000, imgRef: '/ref2.webp' },
+  { title: 'Invite 3 friends', referralsRequired: 1, bonusAward: 50000, imgRef: '/ref1.webp' },
+  { title: 'Invite 5 friends', referralsRequired: 1, bonusAward: 150000, imgRef: '/ref2.webp' },
   { title: 'Invite 10 friends', referralsRequired: 10, bonusAward: 250000, imgRef: '/ref3.webp' },
 ];
 
@@ -19,30 +18,35 @@ const ReferralRewards = () => {
   const [congrats, setCongrats] = useState(false);
 
 
-  const handleClaim = async (reward) => {
-    if (referrals.length >= reward.referralsRequired && !claimedReferralRewards.includes(reward.title)) {
-      const newBalance = balance + reward.bonusAward;
-      try {
-        const userRef = doc(db, 'telegramUsers', id);
-        await updateDoc(userRef, {
-          balance: newBalance,
-          claimedReferralRewards: [...claimedReferralRewards, reward.title],
-        });
-        setBalance(newBalance);
-        setClaimedReferralRewards([...claimedReferralRewards, reward.title]);
-    
-        setCongrats(true);
+    const handleClaim = async (reward) => {
+        if (
+            referrals.length >= reward.referralsRequired &&
+            !claimedReferralRewards.includes(reward.title)
+        ) {
+            try {
+                const response = await axios.post('/api/user/claimReferralReward', {
+                    rewardTitle: reward.title,
+                    bonusAward: reward.bonusAward,
+                });
 
-        setTimeout(() => {
-          setCongrats(false);
-        }, 4000);
-      } catch (error) {
-        console.error('Error claiming referral reward:', error);
-      }
-    } else {
-      console.error('Already Claimed');
-    }
-  };
+                const { newBalance, updatedClaimedRewards } = response.data;
+
+                setBalance(newBalance);
+                setClaimedReferralRewards(updatedClaimedRewards);
+
+                setCongrats(true);
+
+                setTimeout(() => {
+                    setCongrats(false);
+                }, 4000);
+            } catch (error) {
+                console.error('Error claiming referral reward:', error);
+            }
+        } else {
+            console.error('Already claimed or not enough referrals');
+        }
+    };
+
 
     const formatNumberCliam = (num) => {
         if (num < 100000) {

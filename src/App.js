@@ -5,13 +5,12 @@ import coinsmall from "../src/images/coinsmall.webp";
 import tapmecoin from "../src/images/tapme1.webp";
 import bronze from "../src/images/bronze.webp";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { db } from "./firebase";
-import { collection, addDoc, getDocs, updateDoc } from "firebase/firestore";
 import Animate from "./Components/Animate";
 import Spinner from "./Components/Spinner";
 import Levels from "./Components/Levels";
 import flash from "../src/images/flash.webp";
 import { EnergyContext } from "./context/EnergyContext";
+import axios from "axios";
 
 const slideUp = keyframes`
   0% {
@@ -50,6 +49,8 @@ const EnergyFill = styled.div`
   width: ${({ percentage }) => percentage}%;
 `;
 
+const API_URL = "http://localhost:8080/api/users";
+
 function App() {
   const { energy, setEnergy, displayEnergy, setDisplayEnergy, idme, setIdme, count, setCount } = useContext(EnergyContext);
     // eslint-disable-next-line
@@ -66,7 +67,7 @@ function App() {
     document.getElementById("footermain").style.zIndex = "50";
   };
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     if (energy > 0) {
       const { offsetX, offsetY, target } = e.nativeEvent;
       const { clientWidth, clientHeight } = target;
@@ -83,7 +84,6 @@ function App() {
           ? "wobble-top"
           : "wobble-bottom";
 
-      // Remove previous animations
       imageRef.current.classList.remove(
         "wobble-top",
         "wobble-bottom",
@@ -91,15 +91,12 @@ function App() {
         "wobble-right"
       );
 
-      // Add the new animation class
       imageRef.current.classList.add(animationClass);
 
-      // Remove the animation class after animation ends to allow re-animation on the same side
       setTimeout(() => {
         imageRef.current.classList.remove(animationClass);
       }, 500); // duration should match the animation duration in CSS
 
-      // Increment the count
       const rect = e.target.getBoundingClientRect();
       const newClick = {
         id: Date.now(), // Unique identifier
@@ -107,27 +104,25 @@ function App() {
         y: e.clientY - rect.top,
       };
 
-      const updatedCount = count + 2; // Increment count by 5
+      const updatedCount = count + 2;
       const updatedEnergy = energy - 2;
 
       setClicks((prevClicks) => [...prevClicks, newClick]);
       setCount(updatedCount);
       setEnergy(updatedEnergy);
-      setDisplayEnergy(updatedEnergy); // Update display energy
+      setDisplayEnergy(updatedEnergy);
 
-      updateUserStatsInFirestore(idme, updatedCount, updatedEnergy);
+      await updateUserStats(idme, updatedCount, updatedEnergy); // Вызываем API для обновления данных пользователя
 
-      // Remove the click after the animation duration
       setTimeout(() => {
         setClicks((prevClicks) =>
           prevClicks.filter((click) => click.id !== newClick.id)
         );
-      }, 1000); // Match this duration with the animation duration
+      }, 1000);
     }
   };
 
   useEffect(() => {
-    // Fetch username and user ID from Telegram Web App context
     const telegramName =
       window.Telegram.WebApp.initDataUnsafe?.user?.first_name;
     const telegramLastName =
@@ -151,31 +146,28 @@ function App() {
       saveRefereeIdToFirestore();
     }
 
-    // Fetch count and energy from Firestore when component mounts
     if (telegramUserid) {
-      fetchUserStatsFromFirestore(telegramUserid)
-        .then((userStats) => {
-          if (isNaN(userStats.count)) {
+      fetchUserStats(telegramUserid)
+          .then((userStats) => {
+            if (isNaN(userStats.count)) {
+              setCount(0);
+              updateUserStats(telegramUserid, 0, 500);
+            } else {
+              setCount(userStats.count);
+              setEnergy(userStats.energy);
+              setDisplayEnergy(userStats.energy);
+            }
+            setLoading(false);
+          })
+          .catch(() => {
             setCount(0);
-            updateUserStatsInFirestore(telegramUserid, 0, 500);
-          } else {
-            setCount(userStats.count);
-            setEnergy(userStats.energy);
-            setDisplayEnergy(userStats.energy); // Update display energy
-          }
-          setLoading(false); // Set loading to false after fetching count
-        })
-        .catch(() => {
-          setCount(0); // Set count to 0 if fetching fails
-          setEnergy(500); // Set energy to 500 if fetching fails
-          setLoading(false);
-        });
+            setEnergy(500);
+            setLoading(false);
+          });
     }
-    // eslint-disable-next-line
   }, []);
 
   const saveRefereeIdToFirestore = async () => {
-    // Fetch username and user ID from Telegram Web App context
     const telegramUsername =
       window.Telegram.WebApp.initDataUnsafe?.user?.username;
     const telegramUserid = window.Telegram.WebApp.initDataUnsafe?.user?.id;
@@ -194,79 +186,122 @@ function App() {
     }
 
     if (telegramUsername && telegramUserid) {
-      
-      await storeUserData(
-        fullName,
-        telegramUsername,
-        telegramUserid,
-        refereeId
-      );
+      await storeUserData(fullName, telegramUsername, telegramUserid, refereeId);
     }
+
   };
 
+  // const storeUserData = async (fullname, username, userid, refereeId) => {
+  //   try {
+  //     const finalUsername = username || `Anonymous_${userid}`;
+  //     const userRef = collection(db, "telegramUsers");
+  //     const querySnapshot = await getDocs(userRef);
+  //     let userExists = false;
+  //
+  //     querySnapshot.forEach((doc) => {
+  //       if (doc.data().userId === userid) {
+  //         userExists = true;
+  //       }
+  //     });
+  //
+  //     if (!userExists) {
+  //       await addDoc(userRef, {
+  //         fullname: fullname,
+  //         username: finalUsername,
+  //         userId: userid,
+  //         count: 0, // Initialize count
+  //         energy: 500, // Initialize energy
+  //         refereeId: refereeId || null, // Store refereeId if present
+  //         timestamp: new Date(),
+  //       });
+  //       // console.log("User data stored:", { username, userid, refereeId });
+  //     } else {
+  //       // console.log("User already exists:", { username, userid });
+  //     }
+  //   } catch (e) {
+  //     console.error("Error adding document: ", e);
+  //   }
+  // };
   const storeUserData = async (fullname, username, userid, refereeId) => {
     try {
       const finalUsername = username || `Anonymous_${userid}`;
-      const userRef = collection(db, "telegramUsers");
-      const querySnapshot = await getDocs(userRef);
-      let userExists = false;
-
-      querySnapshot.forEach((doc) => {
-        if (doc.data().userId === userid) {
-          userExists = true;
-        }
+      const response = await axios.post(API_URL, {
+        fullname,
+        username: finalUsername,
+        userId: userid,
+        count: 0,
+        energy: 500,
+        refereeId: refereeId || null,
       });
 
-      if (!userExists) {
-        await addDoc(userRef, {
-          fullname: fullname,
-          username: finalUsername,
-          userId: userid,
-          count: 0, // Initialize count
-          energy: 500, // Initialize energy
-          refereeId: refereeId || null, // Store refereeId if present
-          timestamp: new Date(),
-        });
-        // console.log("User data stored:", { username, userid, refereeId });
-      } else {
-        // console.log("User already exists:", { username, userid });
+      if (response.status !== 201) {
+        throw new Error("Failed to store user data");
       }
     } catch (e) {
       console.error("Error adding document: ", e);
     }
   };
 
-  const updateUserStatsInFirestore = async (userid, newCount, newEnergy) => {
+  // const updateUserStatsInFirestore = async (userid, newCount, newEnergy) => {
+  //   try {
+  //     const userRef = collection(db, "telegramUsers");
+  //     const querySnapshot = await getDocs(userRef);
+  //     querySnapshot.forEach((doc) => {
+  //       if (doc.data().userId === userid) {
+  //         updateDoc(doc.ref, { count: newCount, energy: newEnergy });
+  //       }
+  //     });
+  //     // console.log("User stats updated:", { newCount, newEnergy });
+  //   } catch (e) {
+  //     console.error("Error updating document: ", e);
+  //   }
+  // };
+
+  const updateUserStats = async (userid, newCount, newEnergy) => {
     try {
-      const userRef = collection(db, "telegramUsers");
-      const querySnapshot = await getDocs(userRef);
-      querySnapshot.forEach((doc) => {
-        if (doc.data().userId === userid) {
-          updateDoc(doc.ref, { count: newCount, energy: newEnergy });
-        }
+      const response = await axios.put(`${API_URL}/${userid}`, {
+        balance: newCount,
+        energy: newEnergy,
       });
-      // console.log("User stats updated:", { newCount, newEnergy });
+
+      if (response.status !== 200) { // Проверка успешного ответа
+        throw new Error("Failed to update user stats");
+      }
     } catch (e) {
       console.error("Error updating document: ", e);
     }
   };
 
-  const fetchUserStatsFromFirestore = async (userid) => {
+
+  // const fetchUserStatsFromFirestore = async (userid) => {
+  //   try {
+  //     const userRef = collection(db, "telegramUsers");
+  //     const querySnapshot = await getDocs(userRef);
+  //     let userStats = { count: 0, energy: 500 };
+  //     querySnapshot.forEach((doc) => {
+  //       if (doc.data().userId === userid) {
+  //         userStats = { count: doc.data().count, energy: doc.data().energy };
+  //       }
+  //     });
+  //     return userStats;
+  //   } catch (e) {
+  //     console.error("Error fetching document: ", e);
+  //     return { count: 0, energy: 500 };
+  //   }
+  // };
+  const fetchUserStats = async (userid) => {
     try {
-      const userRef = collection(db, "telegramUsers");
-      const querySnapshot = await getDocs(userRef);
-      let userStats = { count: 0, energy: 500 };
-      querySnapshot.forEach((doc) => {
-        if (doc.data().userId === userid) {
-          userStats = { count: doc.data().count, energy: doc.data().energy };
-        }
-      });
-      return userStats;
+      const response = await axios.get(`${API_URL}/${userid}`);
+      if (response.status !== 200) {
+        throw new Error("Failed to fetch user stats");
+      }
+      return response.data;
     } catch (e) {
       console.error("Error fetching document: ", e);
       return { count: 0, energy: 500 };
     }
   };
+
 
   const formattedCount = new Intl.NumberFormat()
     .format(count)
@@ -341,12 +376,3 @@ function App() {
   );
 }
 
-// export default App;
-//
-//     apiKey: "AIzaSyCt3bK1eERJpsmJrNNDsLNdlHP7fwbN1bQ",
-//     authDomain: "plutosmain-2e5d5.firebaseapp.com",
-//     projectId: "plutosmain-2e5d5",
-//     storageBucket: "plutosmain-2e5d5.appspot.com",
-//     messagingSenderId: "381021131691",
-//     appId: "1:381021131691:web:fbf1fabc9fb5046868f8ee",
-//     measurementId: "G-HPKW1B37V6"

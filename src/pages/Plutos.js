@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../firebase"; // Adjust the path as needed
+import { db } from "../firebase";
 import styled, { keyframes } from "styled-components";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import Animate from "../Components/Animate";

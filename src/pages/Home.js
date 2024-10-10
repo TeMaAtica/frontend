@@ -7,8 +7,7 @@ import { AnimatePresence } from "framer-motion";
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import {UserProvider, useUser} from "../context/userContext";
-import { db } from "../firebase";
-import { doc, getDoc } from "firebase/firestore";
+
 
 const tele = window.Telegram.WebApp;
 const Home = () => {

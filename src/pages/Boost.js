@@ -9,15 +9,11 @@ import flash from "../images/flash1.webp";
 import botr from "../images/bott.webp";
 import boost from "../images/booster2.webp";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '../firebase'; // Adjust the path as needed
 import { useUser } from "../context/userContext";
 import { IoClose } from "react-icons/io5";
 import { IoCheckmarkCircle } from "react-icons/io5";
 import Spinner from '../Components/Spinner';
-
-
-
+import axios from 'axios';
 
 const tapValues = [
   {
@@ -236,17 +232,17 @@ const Boost = () => {
     const upgradeCost = upgradeCosts[nextLevel];
     if (nextLevel < tapValues.length && (balance + refBonus) >= upgradeCost && id) {
       const newTapValue = tapValues[nextLevel];
-      const userRef = doc(db, 'telegramUsers', id.toString());
       try {
-        await updateDoc(userRef, {
+        await axios.put('/api/user/upgradeTapValue', {
+          userId: id,
           tapValue: newTapValue,
-          balance: balance - upgradeCost
+          balance: balance - upgradeCost,
         });
         setTapValue(newTapValue);
         setBalance((prevBalance) => prevBalance - upgradeCost);
         setIsUpgrading(false);
         setIsUpgradeModalVisible(false);
-        setCongrats(true)
+        setCongrats(true);
         
         setTimeout(() => {
             setCongrats(false)
@@ -266,12 +262,12 @@ const Boost = () => {
     const energyUpgradeCost = energyUpgradeCosts[nextEnergyLevel];
     if (nextEnergyLevel< energyValues.length && (balance + refBonus) >= energyUpgradeCost && id) {
       const newEnergyValue = energyValues[nextEnergyLevel];
-      const userRef = doc(db, 'telegramUsers', id.toString());
       try {
-        await updateDoc(userRef, {
+        await axios.put('/api/user/upgradeBattery', {
+          userId: id,
           battery: newEnergyValue,
+          energy: newEnergyValue.energy,
           balance: balance - energyUpgradeCost,
-          energy: newEnergyValue.energy
         });
         setBattery(newEnergyValue);
         localStorage.setItem('energy', newEnergyValue.energy);
@@ -283,17 +279,15 @@ const Boost = () => {
         setCongrats(true);
         setIsUpgradeModalVisibleEn(false);
         setTimeout(() => {
-            setCongrats(false)
-        }, 2000)
+          setCongrats(false);
+        }, 2000);
         console.log('Energy value upgraded successfully');
-        console.log('Energy value upgraded successfully +', newEnergyValue.value);
-        console.log('NEW REFILLER VALUES IS:', refiller)
+        console.log('NEW REFILLER VALUES IS:', refiller);
       } catch (error) {
         console.error('Error updating energy value:', error);
+        setIsUpgradingEn(false);
       }
-
     }
-
   };
 
   const handlerRechargeUpgrade = async () => {
@@ -304,7 +298,8 @@ const Boost = () => {
       const newChargingValue = chargingValues[nextChargingLevel];
       const userRef = doc(db, 'telegramUsers', id.toString());
       try {
-        await updateDoc(userRef, {
+        await axios.put('/api/user/upgradeTimeRefill', {
+          userId: id,
           timeRefill: newChargingValue,
           balance: balance - chargingUpgradeCost,
         });
@@ -312,19 +307,17 @@ const Boost = () => {
         setBalance((prevBalance) => prevBalance - chargingUpgradeCost);
         setIsUpgradingEnc(false);
         setEnergy(battery.energy);
-        setCongrats(true)
+        setCongrats(true);
         setIsUpgradeModalVisibleEnc(false);
         setTimeout(() => {
-            setCongrats(false)
-        }, 2000)
-        console.log('Energy value upgraded successfully');
-        console.log('Energy value upgraded successfully +', newChargingValue.value);
+          setCongrats(false);
+        }, 2000);
+        console.log('Time refill upgraded successfully');
       } catch (error) {
-        console.error('Error updating energy value:', error);
+        console.error('Error updating time refill:', error);
+        setIsUpgradingEnc(false);
       }
-
     }
-
   };
 
 
@@ -340,61 +333,67 @@ const Boost = () => {
   const location = useNavigate();
 
   const [isDisabled, setIsDisabled] = useState(false);
-  
+
 
 
   const handleTapGuru = async () => {
     if (id) {
-    if (freeGuru > 0) {
-      setIsDisabled(false);
-      const newRemainingClicks = freeGuru - 1;
-      setFreeGuru(newRemainingClicks);
-      
-      // Update the Firestore document
-      const userRef = doc(db, 'telegramUsers', id.toString());
-      await updateDoc(userRef, {
-        freeGuru: newRemainingClicks,
-        timeSta: new Date() 
-      });
-      startTimer();
-      setMainTap(false);
-      setTapGuru(true);
-      location('/'); // Navigate to /home without refreshing the page
-      setCongrats(true)
-      setTimeout(() => {
-        setCongrats(false)
-    }, 2000)
-    } else {
-      setIsDisabled(true);
+      if (freeGuru > 0) {
+        setIsDisabled(false);
+        const newRemainingClicks = freeGuru - 1;
+        setFreeGuru(newRemainingClicks);
+
+        try {
+          await axios.put('/api/user/useFreeGuru', {
+            userId: id,
+            freeGuru: newRemainingClicks,
+            timeSta: new Date(),
+          });
+          startTimer();
+          setMainTap(false);
+          setTapGuru(true);
+          location('/');
+          setCongrats(true);
+          setTimeout(() => {
+            setCongrats(false);
+          }, 2000);
+        } catch (error) {
+          console.error('Error updating freeGuru:', error);
+        }
+      } else {
+        setIsDisabled(true);
+      }
     }
-    };
   };
- 
+
   const handleFullTank = async () => {
     if (id) {
-    if (fullTank > 0) {
-      setIsDisabled(false);
-      const newRemainingTank = fullTank - 1;
-      setFullTank(newRemainingTank);
-      
-      // Update the Firestore document
-      const userRef = doc(db, 'telegramUsers', id.toString());
-      await updateDoc(userRef, {
-        fullTank: newRemainingTank,
-        timeStaTank: new Date() 
-      });
-      location('/'); // Navigate to /home without refreshing the page
-      localStorage.setItem('energy', battery.energy);
-      setEnergy(battery.energy);
-      setRefiller(battery.energy);
-      setCongrats(true)
-      setTimeout(() => {
-        setCongrats(false)
-    }, 2000)
-    } else {
-      setIsDisabled(true);
+      if (fullTank > 0) {
+        setIsDisabled(false);
+        const newRemainingTank = fullTank - 1;
+        setFullTank(newRemainingTank);
+
+        try {
+          await axios.put('/api/user/useFullTank', {
+            userId: id,
+            fullTank: newRemainingTank,
+            timeStaTank: new Date(),
+          });
+          location('/');
+          localStorage.setItem('energy', battery.energy);
+          setEnergy(battery.energy);
+          setRefiller(battery.energy);
+          setCongrats(true);
+          setTimeout(() => {
+            setCongrats(false);
+          }, 2000);
+        } catch (error) {
+          console.error('Error updating fullTank:', error);
+        }
+      } else {
+        setIsDisabled(true);
+      }
     }
-    };
   };
  
   const calculateTimeRemaining = () => {

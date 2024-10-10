@@ -2,40 +2,44 @@ import React, { useState } from "react";
 import { ReactComponent as ChestIcon } from "../images/icons/chest.svg";
 import { useUser } from "../context/userContext";
 import AnimatedText from "./AnimatedText";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../firebase";
+import axios from 'axios';
 
 const Chests = ({ rewards = [3, 30, 90] }) => {
     const [effect, setEffect] = useState(Array(rewards.length).fill(false));
     const [animations, setAnimations] = useState([]);
-    const { setBalance, balance } = useUser();
+    const { setBalance, balance, id } = useUser();
+    // const updateFirestore = async (newBalance) => {
+    //     const telegramUser = window.Telegram.WebApp.initDataUnsafe?.user;
+    //     if (telegramUser) {
+    //         const { id: userId } = telegramUser;
+    //         const userRef = doc(db, "telegramUsers", userId.toString());
+    //
+    //         try {
+    //             await updateDoc(userRef, {
+    //                 balance: newBalance,
+    //             });
+    //         } catch (error) {
+    //             console.error("Error updating balance:", error);
+    //         }
+    //     }
+    // };
 
-    const updateFirestore = async (newBalance) => {
-        const telegramUser = window.Telegram.WebApp.initDataUnsafe?.user;
-        if (telegramUser) {
-            const { id: userId } = telegramUser;
-            const userRef = doc(db, "telegramUsers", userId.toString());
-
-            try {
-                await updateDoc(userRef, {
-                    balance: newBalance,
-                });
-            } catch (error) {
-                console.error("Error updating balance:", error);
-            }
-        }
-    };
-
-    const handleClick = async (id, e) => {
+    const handleClick = async (chestId, e) => {
         const newEffect = [...effect];
-        newEffect[id] = true;
+        newEffect[chestId] = true;
         setEffect(newEffect);
 
-        const newBalance = balance + rewards[id];
+        const newBalance = balance + rewards[chestId];
         setBalance(newBalance);
 
-        // Обновляем Firestore
-        await updateFirestore(newBalance);
+        try {
+            await axios.put('/api/user/updateBalance', {
+                userId: id,
+                balance: newBalance,
+            });
+        } catch (error) {
+            console.error("Ошибка при обновлении баланса:", error);
+        }
 
         const cursorPosition = {
             x: e.clientX,
@@ -44,12 +48,11 @@ const Chests = ({ rewards = [3, 30, 90] }) => {
 
         setAnimations((prevAnimations) => [
             ...prevAnimations,
-            {amount: rewards[id], position: cursorPosition},
+            { amount: rewards[chestId], position: cursorPosition },
         ]);
     };
 
     const handleAnimationEnd = (index) => {
-        // Remove the finished animation from the state
         setAnimations((prevAnimations) =>
             prevAnimations.filter((_, i) => i !== index)
         );

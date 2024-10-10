@@ -4,7 +4,7 @@ const bot = new Telegraf(TOKEN);
 const express = require("express");
 const app = express()
 app.use(express.json())
-const web_link = "https://96f2-57-129-28-74.ngrok-free.app/";
+const web_link = "https://temaatica.github.io/frontend/";
 const community_link = "https://github.com/TeMaAtica/frontend";
 
 
